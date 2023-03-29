@@ -43,3 +43,10 @@ Plusieurs conditions permettent de déclancher la fin de la partie :
 
 ### Les cibles
 
+Il existe plusieurs cibles valides : 
+- Une carte : Elle peut être séléctionnée aléatoirement, avec sa position dans la zone du processeur ou par selection de l'utilisateur.
+- Cartes d'une zone : Toutes les cartes des zones suivantes peuvent être ciblées :
+    - Toutes les cartes de la main d'un joueur
+    - Toutes les cartes du terrain d'un joueur
+    - Toutes les cartes de la défausse
+    - Toutes les cartes du processeur
