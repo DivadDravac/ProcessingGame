@@ -15,7 +15,7 @@ Deux programmes s'affrontent sur un microprocesseur. Le but pour chacun des prog
 
 ### Les zones
 Le plateau de jeu possède plusieurs zones : 
-- La bibliothèque : Elle est la même pour les deux joueurs. Toutes la cartes y sont disposées en pile de manière aléatoire face cachée. A chaque fois qu'un joueur doit piocher, il doit prendre la première carte au dessus de la bibilothèque et l'ajouter à sa main.
+- La bibliothèque : Elle est la même pour les deux joueurs. Ces 100 cartes y sont disposées en pile de manière aléatoire face cachée. A chaque fois qu'un joueur doit piocher, il doit prendre la première carte au dessus de la bibilothèque et l'ajouter à sa main.
 - La main : Elle n'est visible que par le joueur qui en est propriétaire (sauf dans des cas précis précisés ci-après). 
 
 - Le processeur : Cette zone centrale recoi tous les programmes qu'elle ddoit executer.
