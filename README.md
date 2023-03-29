@@ -8,13 +8,20 @@ Dans le cadre du projet de fin de module "Programmer avec Python", les élèves 
 
 ## Concept du jeu
 Le jeu s'apparente au jeu de carte "Le PDG" dans lequel il est nécessaire de défausser le plus rapidement possible sa main. Il se joue dans sa première version en 1v1 mais pourrait être amélioré en free for all en partie à plusieur. 
-
-### Les règles
 Deux programmes s'affrontent sur un microprocesseur. Le but pour chacun des programmes est de ne plus avoir à executer 
 
-#### Les zones
+## Les règles
 
-#### La séquence de base
+
+### Les zones
+Le plateau de jeu possède plusieurs zones : 
+- La bibliothèque : Elle est la même pour les deux joueurs. Toutes la cartes y sont disposées en pile de manière aléatoire face cachée. A chaque fois qu'un joueur doit piocher, il doit prendre la première carte au dessus de la bibilothèque et l'ajouter à sa main.
+- La main : Elle n'est visible que par le joueur qui en est propriétaire (sauf dans des cas précis précisés ci-après). 
+
+- Le processeur : Cette zone centrale recoi tous les programmes qu'elle ddoit executer.
+
+
+### La séquence de base
 
 De base chaque joueur joue chacun son tour. Lors de son tour le joueur passe par plusieurs phases : 
 
@@ -24,11 +31,15 @@ De base chaque joueur joue chacun son tour. Lors de son tour le joueur passe par
 - Execute : Le processeur execute la pile si une carte execution est posée (cf execution)
 - Fin de tour : C'est l'étape de fin de tour
 
-#### Les conditions de fin de jeu
+#### Execution
+
+#### 
+
+### Les conditions de fin de jeu
 Plusieurs conditions permettent de déclancher la fin de la partie : 
 - Si un joueur n'a plus de cartes en main, il gagne la partie. 
 - Si un joueur ne peut plus piocher de carte de la bibliothèque, il perd la partie.
 - Si un joueur créé une boucle infinie, il perd la partie.
 
-#### Les cibles
+### Les cibles
 
