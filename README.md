@@ -17,7 +17,6 @@ Deux programmes s'affrontent sur un microprocesseur. Le but pour chacun des prog
 Le plateau de jeu possède plusieurs zones : 
 - La bibliothèque : Elle est la même pour les deux joueurs. Ces 100 cartes y sont disposées en pile de manière aléatoire face cachée. A chaque fois qu'un joueur doit piocher, il doit prendre la première carte au dessus de la bibilothèque et l'ajouter à sa main.
 - La main : Elle n'est visible que par le joueur qui en est propriétaire (sauf dans des cas précis précisés ci-après). 
-
 - Le processeur : Cette zone centrale recoi tous les programmes qu'elle ddoit executer.
 
 
@@ -28,7 +27,7 @@ De base chaque joueur joue chacun son tour. Lors de son tour le joueur passe par
 - Début de tour : Le tour de joueur commence
 - Pioche : Le joueur à qui c'est le tour pioche une carte
 - Joue : Le joueur à qui c'est le tour pose une carte sur la pile du processeur
-- Execute : Le processeur execute la pile si une carte execution est posée (cf execution)
+- Execute : Le processeur execute la pile si une carte execution est posée (cf execution). Le processeur execute les cartes comme une pile d'assiètes. La première à être executée est la dernière à avoir été posée et la dernière est la première à avoir été posé sur la zone vide.
 - Fin de tour : C'est l'étape de fin de tour
 
 #### Execution
