@@ -40,6 +40,8 @@ class Main(Zone):
 
     def AjoutCarte(self, Carte):
         Carte.joueur = self.joueur
+        if Carte.joueur == 1:
+            Carte.face = 1
         self.cartes.append(Carte)
         self.UpdateMain()
         
@@ -98,6 +100,7 @@ class Processeur(Zone):
         
         Pos = [0,0]
         Angle = 0
+        Carte.face = 1
 
         if Carte != 0:
             if Carte.joueur == 1:
@@ -105,7 +108,7 @@ class Processeur(Zone):
             else:
                 Pos = [300 + len(self.cartes)*50, 320]
                 Angle = 180
-            Carte.SetPos(Pos, Angle,0.7)
+            Carte.SetPos(Pos, Angle,0.5)
             self.cartes.append(Carte)
 
         
@@ -116,7 +119,7 @@ class Defausse(Zone):
         Angle = random.randint(0, 360)
 
         if Carte != 0:
-            Carte.SetPos(Pos, Angle,0.7)
+            Carte.SetPos(Pos, Angle,0.5)
             self.cartes.append(Carte)
         
 
@@ -127,6 +130,7 @@ class Bibliotheque(Zone):
             randIndex = random.randint(0, len(self.cartes)-1)
             CarteHazard = self.cartes[randIndex]
             self.cartes.remove(CarteHazard)
+            
             return CarteHazard
         else:
             return 0
@@ -134,4 +138,4 @@ class Bibliotheque(Zone):
     def SetBibliotheque(self,Bib):
         self.cartes = Bib.copy()
         for c in self.cartes:
-            c.SetPos([50,350], 90, 0.7)
+            c.SetPos([50,350], 90, 0.5)

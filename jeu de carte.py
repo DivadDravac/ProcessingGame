@@ -4,7 +4,7 @@ import sys
 import random
 
 pygame.init()
-screen = pygame.display.set_mode((1080,720))
+screen = pygame.display.set_mode((1280,720))
 clock = pygame.time.Clock()
 
 battleReady = Board.Board("Biblio")
@@ -20,7 +20,13 @@ CarteAffiche = [battleReady.Defausse.cartes,
 def PlaceImage(Carte):
 
     Pos = (0,0)
-    ImageScale = pygame.transform.scale_by(Carte.image, Carte.echelleBuff)
+    carteAffiche = 0
+    if Carte.face == 1:
+        carteAffiche = Carte.image
+    else:
+        carteAffiche = Carte.imageDos
+
+    ImageScale = pygame.transform.scale_by(carteAffiche, Carte.echelleBuff)
     ImageRot = pygame.transform.rotate(ImageScale, Carte.angleBuff )
     Pos = (Carte.posBuff[0]-ImageRot.get_width()/2, Carte.posBuff[1]-ImageRot.get_height()/2)
     Image = screen.blit(ImageRot,Pos)

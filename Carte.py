@@ -10,6 +10,7 @@ class Carte:
         self.type = CarteType
         self.joueur = CarteJoueur
         self.image = pygame.image.load(CarteImage)
+        self.imageDos = pygame.image.load("Carte.png")
         self.zones = ZonesCartes
         self.fonctions = {}
 
