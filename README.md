@@ -52,4 +52,29 @@ Il existe plusieurs cibles valides :
 
 ## Le projet
 
-## 
+### Les cartes
+   
+L'image est un simple fichier PNG qui porte un nom contenant le nom de la carte, son type et ses fonction. 
+Chaque carte peut avoir jusqu'a 6 fonctions, chacunes décrivant une :
+- cible 
+    - A : Toutes les cartes d'une zone
+    - S : Une carte selectionnée
+    - ? : Une carte au hasard
+    - § : La dernière carte de la pile
+ - Une zone
+    - O : Toutes les zones
+    - = : La bibliothèque
+    - P : Le processeur
+    - D : La défausse
+    - T / t : Le terrain du joueur / de l'adversaire
+    - M / m : La main du joueur / de l'adversaire
+- une action 
+    - @ : pour déplacer
+    - +/- : pour ajouter un marqueur
+- une destination
+    - = : La bibliothèque
+    - P : Le processeur
+    - D : La défausse
+    - T / t : Le terrain du joueur / de l'adversaire
+    - M / m : La main du joueur / de l'adversaire
+La fonction est executée seulement si elle est correcte, sinon elle n'est pas executée.
