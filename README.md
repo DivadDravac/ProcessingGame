@@ -80,7 +80,7 @@ Chaque fonction est
     - § : La dernière carte de la pile
 - une action 
     - @ : pour déplacer
-    - µ : révéler
+    - µ / n : révéler
     - +/- : pour ajouter/retirer un marqueur
 - une destination
     - = : La bibliothèque
