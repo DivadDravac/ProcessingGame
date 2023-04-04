@@ -30,7 +30,6 @@ def PlaceImage(Carte):
     ImageRot = pygame.transform.rotate(ImageScale, Carte.angleBuff )
     Pos = (Carte.posBuff[0]-ImageRot.get_width()/2, Carte.posBuff[1]-ImageRot.get_height()/2)
     Image = screen.blit(ImageRot,Pos)
-    #print((Carte.posBuff[0]-ImageRot.get_width()/2, Carte.posBuff[1]-ImageRot.get_height()/2))
     return Image
 
 def UpdateScreen():

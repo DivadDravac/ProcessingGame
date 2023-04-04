@@ -97,82 +97,6 @@ class Carte:
             else:
                 return False
 
-    def GetCible(self, Step):
-
-        if Step == '=':#Biblio
-            Cible = self.zones["Biblio"]
-
-        elif Step == '#':#Selection
-            if self.target != 0:
-                Cible = self.target
-
-        elif Step == '?':#Rand
-            ZoneCible = random.choice(self.zones.items())
-            Cible = random.choice(self.zones[ZoneCible].cartes)
-
-        elif Step == 'P':#ToutProc
-            Cible = self.zones["Proc"]
-
-        elif Step == 'D':#ToutDef
-            Cible = self.zones["Defausse"]
-
-        elif Step == 'T' :#ToutTerrJ1
-            if Joueur == 1:
-                Cible = self.zones["J1Terr"]
-            else :
-                Cible = self.zones["J2Terr"]
-
-        elif Step == 't':#ToutTerrJ2
-            if Joueur == 1:
-                Cible = self.zones["J2Terr"]
-            else :
-                Cible = self.zones["J1Terr"]
-
-        elif Step == 'M' :#ToutTerrJ1
-            if Joueur == 1:
-                Cible = self.zones["J1Main"]
-            else :
-                Cible = self.zones["J2Main"]
-
-        elif Step == 'm':#ToutTerrJ2
-            if Joueur == 1:
-                Cible = self.zones["J2Main"]
-            else :
-                Cible = self.zones["J1Main"]
-
-        return Cible
-            #-Cible (Carte.s)
-            #   -Biblio             =
-            #   -Selection          #
-            #   -Rand               ?
-            #   -ToutProc           P
-            #   -ToutDef            D
-            #   -ToutTerrJ1 J2      T t
-
-    def GetDest(self, Step):
-        if Step[2] == '=':#Biblio
-            pass
-
-        elif Step[2] == '?':#Rand
-            pass
-
-        elif Step[2] == 'P':#Proc
-            pass
-
-        elif Step[2] == 'D':#Def
-            pass
-
-        elif Step[2] == 'T' :#TerrJ1
-            pass
-
-        elif Step[2] == 't':#TerrJ2
-            pass
-
-        elif Step[2] == 'M' :#TerrJ1
-            pass
-
-        elif Step[2] == 'm':#TerrJ2
-            pass
 
     #Execute la séquence
     def ExecuteSeq(self, Fonction):
@@ -188,20 +112,33 @@ class Carte:
             else:
                 AutreJoueur = 1
 
+            ### Reprendre à la ou on en était TODO
+            
             for Step in Steps:
 
-                Cible = GetCible(Step[0])
+                self.GetZone(Step[0])
+
+                Cible = self.GetCible(Step[1])
 
                 if Cible != 0:
 
-                    if Step[1] == '@':#Déplace
+                    if Step[2] == '@':#Déplace
 
                         Dest = self.GetDest(Step[2])
-                        # Bouger Carte
+                        if Dest != 0:
+
+                            # Bouger Carte
+                            return True
+                        else:
+                            return False
+                            
+
+                    elif Step[2] == '+' or Step[2] == '-':#Marqueur
+                        #Ajout Marqueur
                         return True
 
-                    elif Step[1] == '+' or Step[1] == '-':#Marqueur
-                        #Ajout Marqueur
+                    elif Step[2] == 'µ' or Step[2] == 'n':#Dévoiler
+                        #Revele ou cache
                         return True
 
                 else:
@@ -209,6 +146,77 @@ class Carte:
         else : 
             return True
     #Remet à Zero des séquences
+
+    
+    def GetCible(self, Step):
+
+        if Step == 'A':#Biblio
+            Cible = self.zones["Biblio"]
+
+        elif Step == 'S':#Selection
+            if self.target != 0:
+                Cible = self.target
+
+        elif Step == '?':#Rand
+            ZoneCible = random.choice(self.zones.items())
+            Cible = random.choice(self.zones[ZoneCible].cartes)
+        
+        elif Step == '§':#Selection
+            if self.target != 0:
+                Cible = self.target
+
+        return Cible
+
+    def GetZone(self, Step):
+
+        if Step[2] == 'O':#Biblio
+            pass
+
+        elif Step[2] == '=':#Proc
+            pass
+
+        elif Step[2] == 'P':#Proc
+            pass
+
+        elif Step[2] == 'D':#Def
+            pass
+
+        elif Step[2] == 'T' or Step[2] == 't':#TerrJ1
+            if Step[2] == 'T':
+                pass
+            else:
+                pass
+
+        elif Step[2] == 'M' or Step[2] == 'm' :#TerrJ1
+            if Step[2] == 'M':
+                pass
+            else:
+                pass
+
+    def GetDest(self, Step):
+
+        if Step[2] == '=':#Proc
+            pass
+
+        elif Step[2] == 'P':#Proc
+            pass
+
+        elif Step[2] == 'D':#Def
+            pass
+
+        elif Step[2] == 'T' or Step[2] == 't':#TerrJ1
+            if Step[2] == 'T':
+                pass
+            else:
+                pass
+
+        elif Step[2] == 'M' or Step[2] == 'm' :#TerrJ1
+            if Step[2] == 'M':
+                pass
+            else:
+                pass
+
+
     def Reset(self):
         self.target = 0
         for f in self.fonctions:
