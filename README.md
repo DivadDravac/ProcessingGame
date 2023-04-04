@@ -66,12 +66,6 @@ Un set de carte doit être présent sous la forme d'un dossier (ici Bibliothèqu
 
 
 Chaque fonction est 
-
-- cible 
-    - A : Toutes les cartes d'une zone
-    - S : Une carte selectionnée
-    - ? : Une carte au hasard
-    - § : La dernière carte de la pile
  - Une zone
     - O : Toutes les zones
     - = : La bibliothèque
@@ -79,6 +73,11 @@ Chaque fonction est
     - D : La défausse
     - T / t : Le terrain du joueur / de l'adversaire
     - M / m : La main du joueur / de l'adversaire
+- cible 
+    - A : Toutes les cartes d'une zone
+    - S : Une carte selectionnée
+    - ? : Une carte au hasard
+    - § : La dernière carte de la pile
 - une action 
     - @ : pour déplacer
     - µ : révéler
