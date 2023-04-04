@@ -10,12 +10,12 @@ class Joueur:
         self.Proc = Zone.Processeur()
 
     def JoueCarte(self, Carte, AutreJoueur):
-        if Carte in self.Main.cartes:
+        if Carte in self.Main.cartes:#Joue une carte
             if Carte.ExecuterFonction("Joue"):
-                self.Proc.AjoutCarte(Carte)
-
-                self.Main.cartes.remove(Carte)          
+                self.Proc.Move(Carte, self.Main)    
                 self.Main.UpdateMain()
-        elif :
+        else:
+            #selectionne une carte
+            pass
 
             

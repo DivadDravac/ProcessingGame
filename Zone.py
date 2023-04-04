@@ -15,23 +15,38 @@ class Zone:
         
         while self.cartesExectutees > -1:# arret de l boucle lorsque besoin
             if self.cartes[self.cartesExectutees].ExecuterFonction(ToExecute, Carte):
+                
                 self.cartesExectutees = cartesExectutees - 1
 
                 if ToExecute == "Execute" :
                     #si un objet sur le bord sinon defausse
-                    self.zones[Defausse].append(cartesExecute)
-                    self.cartes.remove(cartesExecute)
+                    if Carte.activation == 0:
+                        self.zones["Defausse"].Move(self.cartes[self.cartesExectutees], self)
+                    else:
+                        if Carte.joueur == 0:
+                            self.zone["J1Terr"].Move(self.cartes[self.cartesExectutees], self)
+                        else:
+                            self.zone["J2Terr"].Move(self.cartes[self.cartesExectutees], self)
+                else:
+                    pass
 
-        if self.cartesExectutees > -1:
-            return True
-        else:
-            return False
+            else:
+                return False
+
+        return True
+
 
     def ResetZone(self):
         self.cartesExectutees = len(self.cartes) - 1
         for CartesReset in self.cartes:
             CartesReset.Reset()
 
+    def Move(self, Cible, From):
+        Cible.zoneActuelle = self
+        self.AjoutCarte(Cible)
+        From.cartes.remove(Cible)
+
+        
 
 class Main(Zone):
     def __init__(self, Joueur):
@@ -41,7 +56,8 @@ class Main(Zone):
 
     def AjoutCarte(self, Carte):
         Carte.joueur = self.joueur
-        if Carte.joueur == 1:
+    
+        if Carte.joueur == 0:
             Carte.face = 1
         self.cartes.append(Carte)
         self.UpdateMain()
@@ -57,7 +73,7 @@ class Main(Zone):
         AngOffset = 0
         Ligne = 0
 
-        if self.joueur == 1:
+        if self.joueur == 0:
             X = 500
             Y = 770
             Ech = 1
@@ -81,7 +97,6 @@ class Terrain(Zone):
 
 class Processeur(Zone):
         
-    
     def AjoutCarte(self, Carte):
         
         Pos = [0,0]
@@ -89,7 +104,7 @@ class Processeur(Zone):
         Carte.face = 1
 
         if Carte != 0:
-            if Carte.joueur == 1:
+            if Carte.joueur == 0:
                 Pos = [300 + len(self.cartes)*50, 370]
             else:
                 Pos = [300 + len(self.cartes)*50, 320]
@@ -99,14 +114,20 @@ class Processeur(Zone):
 
         
 class Defausse(Zone):
-    def AjoutCarte(self, Carte):
-        
-        Pos = [800 + random.randint(0, 100),350 + random.randint(0, 100)]
-        Angle = random.randint(0, 360)
+    def __init__(self, Joueurs):
+        Zone.__init__(self)
+        self.joueurs = Joueurs
 
+    def AjoutCarte(self, Carte):
         if Carte != 0:
-            Carte.SetPos(Pos, Angle,0.5)
-            self.cartes.append(Carte)
+            if self.Joueur.Terr.ExecuterFonctions("Defausse"):
+                if 
+
+                Pos = [800 + random.randint(0, 100),350 + random.randint(0, 100)]
+                Angle = random.randint(0, 360)
+                
+                Carte.SetPos(Pos, Angle,0.5)
+                self.cartes.append(Carte)
         
 
 class Bibliotheque(Zone):
@@ -122,7 +143,7 @@ class Bibliotheque(Zone):
                     cartePiochee = self.cartes[len(self.cartes)-1]
 
                 self.cartes.remove(cartePiochee)
-            
+                cartePiochee.zoneActuelle = self
                 return cartePiochee
             else:
                 return -1
@@ -133,4 +154,5 @@ class Bibliotheque(Zone):
     def SetBibliotheque(self,Bib):
         self.cartes = Bib.copy()
         for c in self.cartes:
+            c.zoneActuelle = self
             c.SetPos([50,350], 90, 0.5)

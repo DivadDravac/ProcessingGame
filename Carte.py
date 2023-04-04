@@ -1,10 +1,10 @@
 import pygame
 
 class Carte:
-    def __init__(self, CarteNom = "Default", CarteFonction ="", CarteImage = "", CarteType = "", CarteJoueur = "", ZonesCartes = {}):
+    def __init__(self, CarteNom = "Default", CarteActivation = 0, CarteFonction ="", CarteImage = "", CarteType = "", CarteJoueur = "", ZonesCartes = {}):
         
         #InitCarte
-        self.face = 0
+        
         self.nom = CarteNom
         self.imagePath = CarteImage
         self.type = CarteType
@@ -12,40 +12,44 @@ class Carte:
         self.image = pygame.image.load(CarteImage)
         self.imageDos = pygame.image.load("Carte.png")
         self.zones = ZonesCartes
+        self.zoneActuelle = 0
         self.fonctions = {}
+        
+        self.activation = CarteActivation
 
         Fonctions = CarteFonction.split("&")
         if len(Fonctions) > 0:
-            self.fonctions ["Debut"] = {"Fct":Fonctions[0],"State": 0,"Act": 0}
+            self.fonctions ["Debut"] = {"Fct":Fonctions[0],"State": 0}
         else:
-            self.fonctions ["Debut"] = {"Fct":"","State": 0,"Act": 0}
+            self.fonctions ["Debut"] = {"Fct":"","State": 0}
         
         if len(Fonctions) > 1:
-            self.fonctions ["Pioche"] = {"Fct":Fonctions[1],"State": 0,"Act": 0}
+            self.fonctions ["Pioche"] = {"Fct":Fonctions[1],"State": 0}
         else:
-            self.fonctions ["Pioche"] = {"Fct":"","State": 0,"Act": 0}
+            self.fonctions ["Pioche"] = {"Fct":"","State": 0}
             
         if len(Fonctions) > 2:
-            self.fonctions ["Joue"] = {"Fct":Fonctions[2],"State": 0,"Act": 0}
+            self.fonctions ["Joue"] = {"Fct":Fonctions[2],"State": 0}
         else:
-            self.fonctions ["Joue"] = {"Fct":"","State": 0,"Act": 0}
+            self.fonctions ["Joue"] = {"Fct":"","State": 0}
 
         if len(Fonctions) > 3:
-            self.fonctions ["Execute"] = {"Fct":Fonctions[3],"State": 0,"Act": 0}
+            self.fonctions ["Execute"] = {"Fct":Fonctions[3],"State": 0}
         else:
-            self.fonctions ["Execute"] = {"Fct":"","State": 0,"Act": 0}
+            self.fonctions ["Execute"] = {"Fct":"","State": 0}
         
         if len(Fonctions) > 4:
-            self.fonctions ["Fin"] = {"Fct":Fonctions[4],"State": 0,"Act": 0}
+            self.fonctions ["Fin"] = {"Fct":Fonctions[4],"State": 0}
         else:
-            self.fonctions ["Fin"] = {"Fct":"","State": 0,"Act": 0}
+            self.fonctions ["Fin"] = {"Fct":"","State": 0}
         
         if len(Fonctions) > 5:
-            self.fonctions ["Defausse"] = {"Fct":Fonctions[5],"State": 0,"Act": 0}
+            self.fonctions ["Defausse"] = {"Fct":Fonctions[5],"State": 0}
         else:
-            self.fonctions ["Defausse"] = {"Fct":"","State": 0,"Act": 0}
+            self.fonctions ["Defausse"] = {"Fct":"","State": 0}
 
         #Props
+        self.face = 0
         self.marqueur = 0
         self.pos = [0,0]
         self.angle = 0
@@ -86,7 +90,7 @@ class Carte:
 
     #Execute la fonction appropriée
     def ExecuterFonction(self,ToExecute,Carte):
-        if ToExecute != "Execute" and self.marqueur > self.fonctions[ToExecute]["Act"]:
+        if ToExecute != "Execute" and self.marqueur > self.activation:
             if self.ExecuteSeq(self.fonctions[ToExecute]["Fct"], Carte):
                 return True
             else:
@@ -117,30 +121,41 @@ class Carte:
             for Step in Steps:
 
                 Zone = self.GetZone(Step[0])
+                
+                CibleS = self.GetCible(Zone, Step[1], Carte)
 
-                Cible = self.GetCible(Step[1], Carte)
-
-                if Cible and Zone:
-                    if Step[2] == '@':#Déplace
-                        Dest = self.GetDest(Step[2])
+                if CibleS and Zone:
+                    if Step[2] == '@':
+                        Dest = self.GetDest(Step[3])
                         if Dest != 0:
-                            if Cible == self.zones["Biblio"]:
-                                if Zone = self.joueur.Main:
-                                    self.zones["Biblio"].Piocher(Joueur)
+                            #Déplace
+                            for Cible in CibleS:
+                                    Dest.Move(Cible, Zone)
 
-                            # Bouger Carte
+                        else:# si erreur de lecture rien !!!
                             return True
-                        else:
-                            return False
                             
 
                     elif Step[2] == '+' or Step[2] == '-':#Marqueur
+                        for Cible in CibleS:
+                            if Step[2] == '+':
+                                
+                                    Cible.marqueur = Cible.marqueur+1
+                            else:
+                                
+                                    Cible.marqueur = Cible.marqueur-1
                         #Ajout Marqueur
-                        return True
+                        
 
                     elif Step[2] == 'µ' or Step[2] == 'n':#Dévoiler
-                        #Revele ou cache
-                        return True
+                        for Cible in CibleS:
+                            if Step[2] == 'µ':
+                                Cible.face = 1
+                            else:
+                                Cible.face = 0
+                            #Revele ou cache
+                        
+
 
                 else:#si rien executée avec succes
                     return True
@@ -171,7 +186,7 @@ class Carte:
 
         return Cible
 
-    def GetZone(self, Step):
+    def GetZone(self,Zone, Step):
 
         if Step[2] == 'O':#Biblio
             pass
@@ -237,4 +252,3 @@ class Carte:
         else:
             pass
             
-        
