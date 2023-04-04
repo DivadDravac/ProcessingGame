@@ -85,21 +85,21 @@ class Carte:
         self.angleBuff = self.angle * (1-self.Trans/100)
 
     #Execute la fonction appropriée
-    def ExecuterFonction(self,ToExecute):
+    def ExecuterFonction(self,ToExecute,Carte):
         if ToExecute != "Execute" and self.marqueur > self.fonctions[ToExecute]["Act"]:
-            if self.ExecuteSeq(self.fonctions[ToExecute]["Fct"]):
+            if self.ExecuteSeq(self.fonctions[ToExecute]["Fct"], Carte):
                 return True
             else:
                 return False
         elif ToExecute == "Execute":
-            if self.ExecuteSeq(self.fonctions[ToExecute]["Fct"]):
+            if self.ExecuteSeq(self.fonctions[ToExecute]["Fct"], Carte):
                 return True
             else:
                 return False
 
 
     #Execute la séquence
-    def ExecuteSeq(self, Fonction):
+    def ExecuteSeq(self, Fonction, Carte):#si ret vrai seq complete sinon faux
 
         Executable = True
         if Fonction != "":
@@ -113,19 +113,20 @@ class Carte:
                 AutreJoueur = 1
 
             ### Reprendre à la ou on en était TODO
-            
+
             for Step in Steps:
 
-                self.GetZone(Step[0])
+                Zone = self.GetZone(Step[0])
 
-                Cible = self.GetCible(Step[1])
+                Cible = self.GetCible(Step[1], Carte)
 
-                if Cible != 0:
-
+                if Cible and Zone:
                     if Step[2] == '@':#Déplace
-
                         Dest = self.GetDest(Step[2])
                         if Dest != 0:
+                            if Cible == self.zones["Biblio"]:
+                                if Zone = self.joueur.Main:
+                                    self.zones["Biblio"].Piocher(Joueur)
 
                             # Bouger Carte
                             return True
@@ -141,28 +142,31 @@ class Carte:
                         #Revele ou cache
                         return True
 
-                else:
-                    return False
-        else : 
+                else:#si rien executée avec succes
+                    return True
+        else : #si rien executée avec succes
             return True
     #Remet à Zero des séquences
 
     
-    def GetCible(self, Step):
+    def GetCible(self, Step, Carte):
+
+        Cible = False
 
         if Step == 'A':#Biblio
             Cible = self.zones["Biblio"]
 
         elif Step == 'S':#Selection
-            if self.target != 0:
-                Cible = self.target
+            if Carte !=0:
+                Cible = Carte
+                
 
         elif Step == '?':#Rand
             ZoneCible = random.choice(self.zones.items())
             Cible = random.choice(self.zones[ZoneCible].cartes)
         
-        elif Step == '§':#Selection
-            if self.target != 0:
+        elif Step == '§':#Dernière de la pile
+                #récupère la dernière de la pile#
                 Cible = self.target
 
         return Cible

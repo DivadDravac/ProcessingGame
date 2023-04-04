@@ -12,16 +12,17 @@ class Zone:
         return carte in self.cartes
     
     def ExecuterFonctions(self, ToExecute, Carte):
-        if self.cartesExectutees == 0:
-            self.cartesExectutees = len(self.cartes) - 1 
-
-        if self.cartesExectutees != -1:
-            while self.cartes[self.cartesExectutees].ExecuterFonction(ToExecute):# arret de l boucle lorsque besoin
+        
+        while self.cartesExectutees > -1:# arret de l boucle lorsque besoin
+            if self.cartes[self.cartesExectutees].ExecuterFonction(ToExecute, Carte):
                 self.cartesExectutees = cartesExectutees - 1
-                self.zones[Defausse].append(cartesExecute)
-                self.cartes.remove(cartesExecute)
 
-        if self.cartesExectutees == -1:
+                if ToExecute == "Execute" :
+                    #si un objet sur le bord sinon defausse
+                    self.zones[Defausse].append(cartesExecute)
+                    self.cartes.remove(cartesExecute)
+
+        if self.cartesExectutees > -1:
             return True
         else:
             return False
@@ -80,21 +81,6 @@ class Terrain(Zone):
 
 class Processeur(Zone):
         
-    def ExecuterLaPile(self):
-        self.cartesExectutees = len(self.cartes)-1
-        if len(self.cartes) > 0:
-            if self.cartes[self.cartesExectutees].ExecuterFonction("Execute"):
-                #print(self.cartes[self.cartesExectutees].zones)
-                self.cartes[self.cartesExectutees].zones["Defausse"].AjoutCarte(self.cartes[self.cartesExectutees])
-                self.cartes.remove(self.cartes[self.cartesExectutees])
-                print("Execution Suivante")
-                return self.ExecuterLaPile()
-            else:
-                print("Arret d'execution")
-                return False
-        else:
-            print("plus rien à executer")
-            return True
     
     def AjoutCarte(self, Carte):
         
@@ -125,15 +111,24 @@ class Defausse(Zone):
 
 class Bibliotheque(Zone):
 
-    def Piocher(self):
+    def Piocher(self, Joueur, Hasard = False):
         if len(self.cartes) > 0:
-            randIndex = random.randint(0, len(self.cartes)-1)
-            CarteHazard = self.cartes[randIndex]
-            self.cartes.remove(CarteHazard)
+            if Joueur.Terr.ExecuterFonctions("Pioche"):
+                cartePiochee = 0
+                if Hasard:
+                    randIndex = random.randint(0, len(self.cartes)-1)
+                    cartePiochee = self.cartes[randIndex]
+                else:
+                    cartePiochee = self.cartes[len(self.cartes)-1]
+
+                self.cartes.remove(cartePiochee)
             
-            return CarteHazard
+                return cartePiochee
+            else:
+                return -1
+
         else:
-            return 0
+            return False
     
     def SetBibliotheque(self,Bib):
         self.cartes = Bib.copy()

@@ -31,8 +31,8 @@ class Board:
         self.step = 0
 
         for PiocheInit in range(0,NbPiocheInit):
-            self.Joueur1.Main.AjoutCarte(self.Bibliotheque.Piocher())
-            self.Joueur2.Main.AjoutCarte(self.Bibliotheque.Piocher())
+            self.Bibliotheque.Piocher(self.Joueur1, True)
+            self.Bibliotheque.Piocher(self.Joueur2, True)
         
         self.BoucleTour(0)
 
@@ -58,54 +58,68 @@ class Board:
                         if self.ExecuteEtape(4,"Fin",Carte, TourJoueur, TourPasJoueur):#Fin
                             self.BoucleTour(0)
                 
+    def CheckExeptions(Etape, Carte):
+        if TourJoueur.Terr.ExecuterFonctions(Etape, Carte) :
+            if TourPasJoueur.Terr.ExecuterFonctions(Etape, Carte):
+                return True
+
+            else:#Demande de cible autre joueur
+                print("Problème Cible Joueur")
+                return False
+                
+        else:#Demande de cible autre joueur
+            print("Problème Cible Antijoueur")
+            return False
 
     def ExecuteEtape(self, EtapeNb, Etape, Carte, TourJoueur, TourPasJoueur):
         if self.step == EtapeNb:
-            if TourJoueur.Terr.ExecuterFonctions(Etape, Carte) :
-                TourJoueur.Terr.ResetZone()
-                if TourPasJoueur.Terr.ExecuterFonctions(Etape, Carte):
+            if EtapeNb == 0 :# Etape de début de tour
+                if self.CheckExeptions(Etape, Carte):#check etape de début
+                    self.step = EtapeNb+1
+                    TourJoueur.Terr.ResetZone()
                     TourPasJoueur.Terr.ResetZone()
 
-                    if EtapeNb == 0:
+            if EtapeNb == 1 :#Etape de pioche
+
+                ret = self.Bibliotheque.Piocher(Joueur)#Tcheck pioche
+                if ret != False and ret != -1:#Si pioche
                         self.step = EtapeNb+1
-                    if EtapeNb == 1:
-                        if len(self.Bibliotheque.cartes) > 0 :
-                            TourJoueur.Main.AjoutCarte(self.Bibliotheque.Piocher())
-                            self.step = EtapeNb+1
-                        else:
-                            print("Joueur " + str(self.Tour) + "a perdu.")
+                        TourJoueur.Terr.ResetZone()
+                        TourPasJoueur.Terr.ResetZone()
+                elif ret == False:#Si plus de pioche
+                    print("Joueur " + str(self.Tour) + "a perdu.")
 
-                    elif EtapeNb == 2 and Carte !=0:
-                        self.Proc.AjoutCarte(Carte)
-                        TourJoueur.JoueCarte(Carte)
-                        Carte.ExecuterFonction("Joue")
-                        self.step = EtapeNb+1
+            elif EtapeNb == 2 :#CarteJouée
+                if TourJoueur.JoueCarte(Carte, TourPasJoueur):
+                    self.step = EtapeNb+1
+                    TourJoueur.Terr.ResetZone()
+                    TourPasJoueur.Terr.ResetZone()
 
-                    elif EtapeNb == 3:
-                            last = len(self.Proc.cartes)-1
-                            if last >= 0:
-                                if self.Proc.cartes[last].type == "Execution" or len(self.Proc.cartes) > 9 :
-                                    if self.Proc.ExecuterLaPile():
-                                        self.step = EtapeNb+1
-                                else:
-                                    self.step = EtapeNb+1
+            elif EtapeNb == 3:#Execution
+                if self.Proc.ExecuterFonctions("Execute", Carte):
+                    self.step = EtapeNb+1
+                    TourJoueur.Terr.ResetZone()
+                    TourPasJoueur.Terr.ResetZone()
 
-                    elif EtapeNb == 4:
-                        if self.Tour == 1:
-                            self.Tour = 2
-                        else:
-                            self.Tour = 1
-                        self.step = 0#retour à l'étape 1
-                    print("Etape OK")
-                    return True
+
+            elif EtapeNb == 4:#Fin de tour
+                if self.CheckExeptions(Etape, Carte):
+                    if self.Tour == 1:
+                        self.Tour = 2
+                    else:
+                        self.Tour = 1
+                    self.step = 0#retour à l'étape 1
+
+                    TourJoueur.Terr.ResetZone()
+                    TourPasJoueur.Terr.ResetZone()
+
+            print("Etape OK")
+            
+            return True
+                
+
                     
-                else:#Demande de cible autre joueur
-                    print("Problème Cible Antijoueur")
-                    return False
-                    
-            else:#Demande de cible joueur
-                print("Problème Cible Joueur")
-                return False
+            
         else:#Etape dépassée
             if self.step > EtapeNb:
                 print("Etape passée")
@@ -119,11 +133,5 @@ class Board:
 
 
     def SelectionneCarte(self, Carte):
-        TourJoueur = 0
 
-        if self.Tour == 1:
-            TourJoueur = self.Joueur1
-        else:
-            TourJoueur = self.Joueur2
-        if TourJoueur.Main.IsCarte(Carte):
-            self.BoucleTour(Carte)
+        self.BoucleTour(Carte)
