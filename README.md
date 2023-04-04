@@ -52,4 +52,40 @@ Il existe plusieurs cibles valides :
 
 ## Le projet
 
-## 
+### Les cartes
+
+Un set de carte doit être présent sous la forme d'un dossier (ici Bibliothèque). L'image est un simple fichier PNG qui porte un nom contenant le nom de la carte, son type et ses fonction. Toutes ses informations sont séparées du caractère "$". Chaque carte peut avoir jusqu'a 6 séquences déclanchées lors des différents états du processeur. Chaque séquence est séparée par le caractère "&" Chaque. Ainsi il y a :
+ 
+- la première séquence déclanchée pour les étapes de début du tour des joueurs
+- une séquence déclanchée à chaque pioche
+- une séquence déclanchée à chaque carte jouée sur le migroprocesseur
+- une séquence déclanchée lors de l'execution de la carte
+- une séquence déclanchée pour les étapes de fin du tour des joueurs
+- une séquence déclanchée à chaque défausse
+
+
+
+Chaque fonction est 
+ - Une zone
+    - O : Toutes les zones
+    - = : La bibliothèque
+    - P : Le processeur
+    - D : La défausse
+    - T / t : Le terrain du joueur / de l'adversaire
+    - M / m : La main du joueur / de l'adversaire
+- cible 
+    - A : Toutes les cartes d'une zone
+    - S : Une carte selectionnée
+    - ? : Une carte au hasard
+    - § : La dernière carte de la pile
+- une action 
+    - @ : pour déplacer
+    - µ / n : révéler
+    - +/- : pour ajouter/retirer un marqueur
+- une destination
+    - = : La bibliothèque
+    - P : Le processeur
+    - D : La défausse
+    - T / t : Le terrain du joueur / de l'adversaire
+    - M / m : La main du joueur / de l'adversaire
+La fonction est executée seulement si elle est correcte, sinon elle n'est pas executée.
