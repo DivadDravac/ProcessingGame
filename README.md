@@ -79,6 +79,7 @@ Chaque fonction est
     - ? : Une carte au hasard
     - § : La dernière carte de la pile
 - une action 
+    - X : Execution de la pile du microprocesseur
     - @ : pour déplacer
     - µ / n : révéler
     - +/- : pour ajouter/retirer un marqueur
