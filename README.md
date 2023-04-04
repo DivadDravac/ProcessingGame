@@ -54,14 +54,16 @@ Il existe plusieurs cibles valides :
 
 ### Les cartes
 
-Un set de carte doit être présent sous la forme d'un dossier (ici Bibliothèque). L'image est un simple fichier PNG qui porte un nom contenant le nom de la carte, son type et ses fonction. Toutes ses informations sont séparées du caractère "$". Chaque carte peut avoir jusqu'a 6 séquences déclanchées lors des différents états du processeur. Chaque  Ainsi il y a :
+Un set de carte doit être présent sous la forme d'un dossier (ici Bibliothèque). L'image est un simple fichier PNG qui porte un nom contenant le nom de la carte, son type et ses fonction. Toutes ses informations sont séparées du caractère "$". Chaque carte peut avoir jusqu'a 6 séquences déclanchées lors des différents états du processeur. Chaque séquence est séparée par le caractère "&" Chaque. Ainsi il y a :
  
-- une séquence déclanchée pour les étapes de début du tour des joueurs
-- une séquence déclanchée pour les étapes de fin du tour des joueurs
+- la première séquence déclanchée pour les étapes de début du tour des joueurs
 - une séquence déclanchée à chaque pioche
-- une séquence déclanchée à chaque défausse
 - une séquence déclanchée à chaque carte jouée sur le migroprocesseur
 - une séquence déclanchée lors de l'execution de la carte
+- une séquence déclanchée pour les étapes de fin du tour des joueurs
+- une séquence déclanchée à chaque défausse
+
+
 
 Chaque fonction est 
 
@@ -79,7 +81,8 @@ Chaque fonction est
     - M / m : La main du joueur / de l'adversaire
 - une action 
     - @ : pour déplacer
-    - +/- : pour ajouter un marqueur
+    - µ : révéler
+    - +/- : pour ajouter/retirer un marqueur
 - une destination
     - = : La bibliothèque
     - P : Le processeur
