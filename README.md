@@ -54,7 +54,7 @@ Il existe plusieurs cibles valides :
 
 ### Les cartes
 
-Un set de carte doit être présent sous la forme d'un dossier (ici Bibliothèque). L'image est un simple fichier PNG qui porte un nom contenant le nom de la carte, son type et ses fonction. Toutes ses informations sont séparées du caractère "$". Chaque carte peut avoir jusqu'a 6 séquences déclanchées lors des différents états du processeur. Chaque séquence est séparée par le caractère "&" Chaque. Ainsi il y a :
+Un set de carte doit être présent sous la forme d'un dossier (ici Bibliothèque). L'image est un simple fichier PNG qui porte un nom contenant le nom de la carte, son type, son niveau d'activation et ses fonction. Toutes ses informations sont séparées du caractère "$". Chaque carte peut avoir jusqu'a 6 séquences déclanchées lors des différents états du processeur. Chaque séquence est séparée par le caractère "&" Chaque. Ainsi il y a :
  
 - la première séquence déclanchée pour les étapes de début du tour des joueurs
 - une séquence déclanchée à chaque pioche
