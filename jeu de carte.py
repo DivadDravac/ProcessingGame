@@ -60,6 +60,9 @@ def StartGame():
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
                 BufSelect = 0
                 ## if mouse is pressed get position of cursor ##
+
+                #battleReady.ShowZones()
+
                 for CardPloted in Cartes:
                     if CardPloted[1].collidepoint(pos):
                         BufSelect = CardPloted

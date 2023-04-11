@@ -14,7 +14,7 @@ class Chargeur:
 
             CarteNom = path.split("$")[0]
             CarteType = path.split("$")[1]
-            CarteActivation = path.split("$")[2]
+            CarteActivation = int(path.split("$")[2])
             CarteFonction = path.split("$")[3]
             CarteImage = path
             opencard = Carte.Carte(CarteNom, CarteActivation, CarteFonction, NomFichier + "/" + CarteImage, CarteType,0, self.zones)

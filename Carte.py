@@ -90,12 +90,15 @@ class Carte:
 
     #Execute la fonction appropriée
     def ExecuterFonction(self,ToExecute,Carte):
-        if ToExecute != "Execute" and self.marqueur > self.activation:
+        
+        if ToExecute != "Execute" and self.marqueur > self.activation :
+            
             if self.ExecuteSeq(self.fonctions[ToExecute]["Fct"], Carte):
                 return True
             else:
                 return False
-        elif ToExecute == "Execute":
+        elif ToExecute == "Execute" or ToExecute == "Joue":
+            
             if self.ExecuteSeq(self.fonctions[ToExecute]["Fct"], Carte):
                 return True
             else:
