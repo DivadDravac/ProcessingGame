@@ -64,9 +64,9 @@ class Carte:
         
     #Set position Tien compte de la dynamique
     def SetPos(self, PosToSet, AngleToSet, ScaleToSet):
-        #self.posBuff = PosToSet
-        #self.angleBuff = AngleToSet
-        #self.echelleBuff = ScaleToSet
+        self.posBuff = PosToSet
+        self.angleBuff = AngleToSet
+        self.echelleBuff = ScaleToSet
         self.pos = PosToSet
         self.angle = AngleToSet
         self.echelle = ScaleToSet
@@ -110,7 +110,7 @@ class Carte:
 
         Executable = True
         if Fonction != "":
-            Steps = Fonction.split("-")
+            Steps = Fonction.split("£")
 
             #Cible Action Destination
             Joueur = self.joueur

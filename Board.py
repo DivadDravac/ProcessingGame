@@ -8,19 +8,19 @@ class Board:
         
         #Init des Zones
         self.Bibliotheque = Zone.Bibliotheque()
-        self.Joueur1 = Joueur.Joueur(1,"nom")
-        self.Joueur2 = Joueur.Joueur(2,"nom")
+        self.Joueur1 = Joueur.Joueur(1,"Joueur 1")
+        self.Joueur2 = Joueur.Joueur(2,"Joueur 2")
         self.Tour = [self.Joueur1, self.Joueur2]
         self.Defausse = Zone.Defausse(self.Tour)
         self.Proc = Zone.Processeur()
 
-        self.Zones = {"Biblio"   :self.Bibliotheque,
-                "Defausse"      :self.Defausse,
-                "Proc"          :self.Proc,
-                "J1Main"        :self.Joueur1.Main,
-                "J1Terr"        :self.Joueur1.Terr,
-                "J2Main"        :self.Joueur2.Main,
-                "J2Terr"        :self.Joueur2.Terr}
+        self.Zones = {"Biblio"  :self.Bibliotheque,
+                        "Defausse"      :self.Defausse,
+                        "Proc"          :self.Proc,
+                        "J1Main"        :self.Joueur1.Main,
+                        "J1Terr"        :self.Joueur1.Terr,
+                        "J2Main"        :self.Joueur2.Main,
+                        "J2Terr"        :self.Joueur2.Terr}
 
         #Init des Cartes
         Cartes = LoaderCartes.Chargeur(self.Zones).Init(NomBiblio)
@@ -32,8 +32,8 @@ class Board:
         self.step = 0
 
         for PiocheInit in range(0,NbPiocheInit):
-            self.Bibliotheque.Piocher(self.Joueur1, True)
-            self.Bibliotheque.Piocher(self.Joueur2, True)
+            self.Bibliotheque.Piocher(self.Joueur1)
+            self.Bibliotheque.Piocher(self.Joueur2)
         
         self.BoucleTour(0)
 
@@ -82,10 +82,11 @@ class Board:
                         reset = True
 
                 elif ret == False:#Si plus de pioche
-                    print("Joueur " + self.Tour[0].Nom + "a perdu.")
+                    print("Joueur " + self.Tour[0].Nom + " a perdu.")
 
             elif EtapeNb == 2 :#CarteJouée
                 if self.Tour[0].JoueCarte(Carte, self.Tour[1]):
+
                     self.step = EtapeNb+1
                     reset = True
 
@@ -110,9 +111,6 @@ class Board:
             #print("Etape OK")
             
             return True
-                
-
-                    
             
         else:#Etape dépassée
             if self.step > EtapeNb:
@@ -127,9 +125,8 @@ class Board:
 
 
     def SelectionneCarte(self, Carte):
-
         self.BoucleTour(Carte)
 
     def ShowZones(self ):
-        for  Zone in self.Zones:
+        for Zone in self.Zones:
             print(self.Zones[Zone].cartes)

@@ -42,10 +42,11 @@ class Zone:
             CartesReset.Reset()
 
     def Move(self, Cible, From):
-        Cible.zoneActuelle = self
-        self.AjoutCarte(Cible)
-        print(From, Cible)
+        CarteCopie = Cible
         From.cartes.remove(Cible)
+        CarteCopie.zoneActuelle = self
+        self.cartes.append(CarteCopie)
+        self.AjoutCarte(CarteCopie)
 
 
 class Main(Zone):
@@ -59,7 +60,6 @@ class Main(Zone):
     
         if Carte.joueur.numero == 1:
             Carte.face = 1
-        self.cartes.append(Carte)
         self.UpdateMain()
         
   
@@ -100,17 +100,17 @@ class Processeur(Zone):
     def AjoutCarte(self, Carte):
         
         Pos = [0,0]
-        Angle = 0
+        Angle = 90
         Carte.face = 1
         
         if Carte != 0:
-            self.cartes.append(Carte)
+            
             if Carte.joueur.numero == 1:
                 Pos = [300 + len(self.cartes)*50, 370]
                 
             else:
                 Pos = [300 + len(self.cartes)*50, 320]
-                Angle = 180
+                Angle = -90
 
             Carte.SetPos(Pos, Angle,0.5)
             
@@ -127,23 +127,20 @@ class Defausse(Zone):
                 if self.joueurs[0].Terr.ExecuterFonctions("Defausse"):
 
                     Pos = [800 + random.randint(0, 100),350 + random.randint(0, 100)]
-                    Angle = random.randint(0, 360)
+                    Angle = random.randint(-10, 10)
                     
                     Carte.SetPos(Pos, Angle,0.5)
-                    self.cartes.append(Carte)
         
 
 class Bibliotheque(Zone):
 
-    def Piocher(self, Joueur, Hasard = False):
+    def Piocher(self, Joueur):
         if len(self.cartes) > 0:
             if Joueur.Terr.ExecuterFonctions("Pioche", 0):
                 cartePiochee = 0
-                if Hasard:
-                    randIndex = random.randint(0, len(self.cartes)-1)
-                    cartePiochee = self.cartes[randIndex]
-                else:
-                    cartePiochee = self.cartes[len(self.cartes)-1]
+
+                cartePiochee = self.cartes[len(self.cartes)-1]
+
                 Joueur.Main.Move(cartePiochee, self)
                 return cartePiochee
             else:
@@ -156,4 +153,4 @@ class Bibliotheque(Zone):
         self.cartes = Bib.copy()
         for c in self.cartes:
             c.zoneActuelle = self
-            c.SetPos([50,350], 90, 0.5)
+            c.SetPos([50,100 + self.cartes.index(c)*10 ], 90, 0.5)
