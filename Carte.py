@@ -17,36 +17,14 @@ class Carte:
         
         self.activation = CarteActivation
 
-        Fonctions = CarteFonction.split("&")
-        if len(Fonctions) > 0:
-            self.fonctions ["Debut"] = {"Fct":Fonctions[0],"State": 0}
-        else:
-            self.fonctions ["Debut"] = {"Fct":"","State": 0}
-        
-        if len(Fonctions) > 1:
-            self.fonctions ["Pioche"] = {"Fct":Fonctions[1],"State": 0}
-        else:
-            self.fonctions ["Pioche"] = {"Fct":"","State": 0}
-            
-        if len(Fonctions) > 2:
-            self.fonctions ["Joue"] = {"Fct":Fonctions[2],"State": 0}
-        else:
-            self.fonctions ["Joue"] = {"Fct":"","State": 0}
+        Fonctions = CarteFonction.split("£")
 
-        if len(Fonctions) > 3:
-            self.fonctions ["Execute"] = {"Fct":Fonctions[3],"State": 0}
-        else:
-            self.fonctions ["Execute"] = {"Fct":"","State": 0}
-        
-        if len(Fonctions) > 4:
-            self.fonctions ["Fin"] = {"Fct":Fonctions[4],"State": 0}
-        else:
-            self.fonctions ["Fin"] = {"Fct":"","State": 0}
-        
-        if len(Fonctions) > 5:
-            self.fonctions ["Defausse"] = {"Fct":Fonctions[5],"State": 0}
-        else:
-            self.fonctions ["Defausse"] = {"Fct":"","State": 0}
+        self.fonctions ["Joue"] = {"Fct":Fonctions[0],"State": 0}
+        self.fonctions ["Execute"] = {"Fct":Fonctions[1],"State": 0}    
+        self.fonctions ["Debut"] = {"Fct":Fonctions[2],"State": 0}
+        self.fonctions ["Pioche"] = {"Fct":Fonctions[3],"State": 0}
+        self.fonctions ["Defausse"] = {"Fct":Fonctions[4],"State": 0}
+        self.fonctions ["Fin"] = {"Fct":Fonctions[5][:len(Fonctions[5])-4],"State": 0}
 
         #Props
         self.face = 0
@@ -110,7 +88,7 @@ class Carte:
 
         Executable = True
         if Fonction != "":
-            Steps = Fonction.split("£")
+            Steps = Fonction.split("¤")
 
             #Cible Action Destination
             Joueur = self.joueur
